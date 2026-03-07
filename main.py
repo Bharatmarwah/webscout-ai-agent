@@ -9,20 +9,15 @@ import os
 
 app = FastAPI()
 
-# LLM
+
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0.7,
     google_api_key=os.getenv("GOOGLE_API_KEY")
 )
 
-# Search client
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 
-
-# -----------------------------
-# Tools definition
-# -----------------------------
 
 tools = [
 {
@@ -63,10 +58,6 @@ tools = [
 
 llm = llm.bind_tools(tools)
 
-
-# -----------------------------
-# Tool Implementations
-# -----------------------------
 
 def web_search(query: str):
 
