@@ -9,7 +9,6 @@ import os
 
 app = FastAPI()
 
-
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0.7,
@@ -113,6 +112,8 @@ Rules:
 - Use web_search to find information.
 - If needed open webpages using fetch_webpage.
 - Always include source URLs in the answer.
+- Answer the question based on the latest information you can find.
+- If you don't find relevant information, say I cant able to find relevant information.
 
 User question:
 {message}
