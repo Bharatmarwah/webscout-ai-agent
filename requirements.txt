@@ -7,4 +7,5 @@ requests==2.32.3
 beautifulsoup4==4.14.3
 uvicorn==0.34.0
 google-generativeai==1.66.0
+streamlit==1.41.1
 
