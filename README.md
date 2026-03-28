@@ -1,37 +1,41 @@
-
 # Web Search & Page Summarization Agent 🔍📄
 
-A FastAPI-powered intelligent assistant that combines web search and webpage summarization capabilities using Google's Gemini AI and Tavily search API. The agent can search the web, fetch any webpage, extract its content, and provide AI-powered summaries with source citations.
+A FastAPI-powered intelligent assistant that combines web search, webpage fetching, and AI summarization with a Streamlit frontend for easy interaction.
 
 **Created by Bharat**
 
+- GitHub: https://github.com/Bharatmarwah
+
 ## 📋 Overview
 
-This application provides an AI-powered assistant that can:
-- **Search the web** for latest information using Tavily API
-- **Fetch and extract** content from any webpage
-- **Summarize webpage content** intelligently
-- **Generate contextual answers** with source URLs
-- **Utilize Google's Gemini 2.5 Flash** model for natural language understanding and summarization
+This project now has two layers:
+- **FastAPI backend** for AI/tool orchestration and API responses
+- **Streamlit frontend** for a simple chat-style web UI that calls the backend API
+
+The assistant can:
+- Search the web for latest information
+- Fetch and extract content from webpages
+- Summarize webpage content
+- Return contextual answers with source citations
 
 ## ✨ Features
 
-- **Intelligent Web Search**: Uses Tavily API to search the web and return relevant, up-to-date results
-- **Webpage Fetching & Extraction**: Retrieves and parses HTML content from any URL
-- **Content Summarization**: AI-powered summarization of webpage content using Gemini 2.5 Flash
-- **Source Citations**: Automatically includes source URLs in responses
-- **RESTful API**: Simple GET endpoint for easy integration
-- **Automatic Tool Selection**: AI decides whether to search or fetch based on user queries
-- **Dual-Mode Operation**: Works as both a search engine and a webpage summarizer
+- **FastAPI Backend API**: Exposes `/chat` endpoint for query processing
+- **Streamlit Frontend**: User-friendly interface to send queries and display answers
+- **Intelligent Web Search**: Uses Tavily API for up-to-date results
+- **Webpage Fetch + Extraction**: Pulls text content from target URLs
+- **AI Summarization**: Uses Gemini 2.5 Flash for concise summaries
+- **Source Citations**: Preserves source URLs in responses
 
 ## 🛠️ Technology Stack
 
-- **FastAPI**: Modern web framework for building APIs
-- **LangChain**: Framework for LLM application development
-- **Google Gemini**: AI language model (gemini-2.5-flash)
-- **Tavily API**: Web search functionality
-- **BeautifulSoup4**: HTML parsing and content extraction
-- **Requests**: HTTP library for webpage fetching
+- **FastAPI**: Backend API service
+- **Streamlit**: Frontend web app
+- **LangChain**: LLM tooling/orchestration
+- **Google Gemini**: AI model (`gemini-2.5-flash`)
+- **Tavily API**: Web search
+- **BeautifulSoup4**: HTML parsing
+- **Requests**: HTTP operations
 
 ## 📦 Installation
 
@@ -75,15 +79,30 @@ TAVILY_API_KEY=your_tavily_api_key_here
 
 ## 🚀 Usage
 
-### Starting the Server
-
-Run the FastAPI server using uvicorn:
+### 1) Start Backend (FastAPI)
 
 ```powershell
 uvicorn main:app --reload
 ```
 
-The server will start at `http://localhost:8000`
+Backend default URL:
+- `http://localhost:8000`
+
+### 2) Start Frontend (Streamlit)
+
+```powershell
+streamlit run app.py
+```
+
+Frontend default URL:
+- `http://localhost:8501`
+
+### 3) Use the App
+
+- Open Streamlit in browser
+- Enter a query (question, search prompt, or webpage URL request)
+- Streamlit sends it to FastAPI `/chat`
+- Response is shown in the UI
 
 ### API Endpoints
 
@@ -92,7 +111,11 @@ The server will start at `http://localhost:8000`
 **GET** `/chat`
 
 **Query Parameters:**
-- `message` (string, required): The user's question, search query, or URL to summarize
+- `message` (string, required): User query or webpage summarization prompt
+
+**Note on spacing / extra words in query:**
+- The API handles normal extra spaces and natural language phrasing.
+- For best accuracy, keep prompts clear and specific.
 
 **Example Requests:**
 
@@ -113,12 +136,6 @@ http://localhost:8000/chat?message=Summarize this article: https://example.com/a
 }
 ```
 
-### API Documentation
-
-FastAPI provides automatic interactive API documentation:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
 ## 🔧 How It Works
 
 1. **User submits a query** via the `/chat` endpoint
@@ -127,6 +144,14 @@ FastAPI provides automatic interactive API documentation:
    - `web_search`: Searches the web using Tavily API (max 5 results)
    - `fetch_webpage`: Fetches and extracts content from specific URLs
 4. **AI generates response** based on tool results with source citations
+
+## 🧭 Frontend-Backend Flow
+
+1. User enters prompt in Streamlit (`app.py`)
+2. Streamlit sends request to FastAPI backend (`main.py`) at `/chat`
+3. Backend chooses tool flow (search/fetch/summarize)
+4. Backend returns final answer
+5. Streamlit renders the response
 
 ## 📝 API Keys
 
@@ -176,9 +201,11 @@ timeout=10  # seconds
 
 ## 📊 Project Structure
 
-```
+```text
 WebSearchAgent/
-├── main.py              # Main application file
+├── app.py               # Streamlit frontend
+├── main.py              # FastAPI backend
+├── README.md            # Project documentation
 ├── requirements.txt     # Python dependencies
 ├── websearchenv/        # Virtual environment
 └── __pycache__/         # Python cache files
@@ -244,11 +271,12 @@ pip list  # Verify installed packages
 
 ## 📞 Support
 
-For issues related to:
-- **Gemini API**: Visit [Google AI Documentation](https://ai.google.dev/)
-- **Tavily API**: Visit [Tavily Documentation](https://docs.tavily.com/)
-- **FastAPI**: Visit [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- **LangChain**: Visit [LangChain Documentation](https://python.langchain.com/)
+- Email: bharatmarwah4@gmail.com
+- GitHub: https://github.com/Bharatmarwah
+- Gemini API docs: https://ai.google.dev/
+- Tavily API docs: https://docs.tavily.com/
+- FastAPI docs: https://fastapi.tiangolo.com/
+- Streamlit docs: https://docs.streamlit.io/
 
 ## 🎯 Future Enhancements
 
@@ -265,5 +293,4 @@ Potential improvements:
 - Unit tests
 - CORS configuration
 - Docker support
----
 
