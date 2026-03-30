@@ -111,9 +111,9 @@ User question: {message}
     MAX_STEPS = 3
 
     for _ in range(MAX_STEPS):
-        response = llm.invoke(messages)
+        response = llm.invoke(messages) # thought
 
-        if not response.tool_calls:
+        if not response.tool_calls: # execute
             clean = extract_text(response.content).replace("\\n", "\n").strip()
             return {"answer": clean}
 
@@ -136,7 +136,14 @@ User question: {message}
             ToolMessage(
                 content=json.dumps(result),
                 tool_call_id=tool_call["id"]
-            )
+            ) # observe
         )
 
     return {"answer": "Failed to generate response in limited steps"}
+
+
+# 1. Thought (LLM reasoning)
+# 2. Action (tool call)
+# 3. Observation (ToolMessage)
+# 4. Thought (again)
+# 5. Final Answer
